@@ -1,0 +1,22 @@
+title Set Event
+
+div
+  div#header
+    h2 CrowdNotes
+    p Pick Your Event
+
+  form(method='post')
+    div
+      div.eventname 
+        strong Event Name 
+        a(href='/sortEvents/name') Sort
+      div.eventdate 
+        strong Event Date 
+        a(href='/sortEvents/date') Sort
+      each event in currentEvents
+        p
+          a.eventname(href= '/setEvent/#{event._id}')= event.name
+          div.eventdate #{event.date.toDateString()}
+
+div.button 
+  a(href='/account') HOME

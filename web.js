@@ -24,17 +24,14 @@ var db;
 // Configuration
 app.configure(function(){
   app.set('views', __dirname + '/views');
-  app.set('view engine', 'hbs');
+  app.set('view engine', 'ejs');
   app.set('view options',{layout:true}); // use /views/layout.html to manage your main header/footer wrapping template
-  app.register('html',require('hbs')); //use .html files in /views instead .hbs
+  app.register('html',require('ejs')); //use .html files in /views instead .hbs
   
   app.use(express.cookieParser());
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   
-  //app.use(require('stylus').middleware({ src: __dirname + '/public' }));
-  app.use(express.static(__dirname + '/public'));
-
   app.use(express.session({ 
     store: mongoStore(conn)
   , secret: 'applecake'
@@ -43,7 +40,8 @@ app.configure(function(){
   }));
   app.use(passport.initialize());
   app.use(passport.session());
-  app.use(express.static(__dirname + '/public'));
+  
+  app.use(express.static(__dirname + '/static'));
 });
 
 db = new DB.startup(conn);

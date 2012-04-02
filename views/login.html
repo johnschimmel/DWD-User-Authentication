@@ -1,4 +1,9 @@
-Login
+<h2>Login</h2>
+<hr/>
+<% if (typeof(message) != "undefined") { %>
+<p><%= message %></p>
+<hr>
+<% } %>
 
 <form method="POST" action="/login">
     <label for="email">Email:</label>

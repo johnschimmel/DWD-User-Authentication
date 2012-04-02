@@ -8,13 +8,19 @@ var passport = require('passport')
 
 var User = require('./models/user');
 
+
+
+
 // Define local strategy for Passport
 passport.use(new LocalStrategy({
     usernameField: 'email'
   },
   function(email, password, done) {
     User.authenticate(email, password, function(err, user) {
-      return done(err, user);
+        if (err || !user) { return done(null, false, { message: 'Invalid password' }); }
+        //if (!user) { return done(null, false, { message: 'Unkown email ' + email }); }
+        //if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
+        return done(null, user);
     });
   }
 ));
@@ -30,6 +36,9 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
+
+
+
 
 // connect to database
 module.exports = {

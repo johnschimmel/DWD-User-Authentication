@@ -2,10 +2,7 @@
   */
 
 var passport = require('passport');
-
-var user = require('./routes/user');
-//var notes = require('./routes/notes');
-//var events = require('./routes/events');
+var userRoute = require('./routes/user');
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
@@ -14,50 +11,22 @@ function ensureAuthenticated(req, res, next) {
 
 module.exports = function(app) {
 
-  app.get('/', user.index);
+  app.get('/', userRoute.index);
 
-  app.get('/register', user.getRegister);
-  app.post('/register', user.postRegister);
+  app.get('/register', userRoute.getRegister);
+  app.post('/register', userRoute.postRegister);
 
-  app.get('/about', user.about);
+  app.get('/about', userRoute.about);
 
-  app.get('/login', user.login);
-  app.post('/login', passport.authenticate('local', 
-    { 
-      successRedirect: '/account', 
-      failureRedirect: '/login'
-    })
-  );
+  app.get('/login', userRoute.login);
+  app.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
+    function(req, res) {
+      res.redirect('/account');
+    });
 
-  app.get('/account', ensureAuthenticated, user.getAccount);
+  app.get('/account', ensureAuthenticated, userRoute.getAccount);
 
-  app.get('/logout', user.logout);
+  app.get('/logout', userRoute.logout);
 
 
-/*
-  app.get('/reviewNotes', ensureAuthenticated, notes.reviewNotes);
-
-  app.get('/newNote', ensureAuthenticated, notes.getNewNote);
-  app.post('/newNote', ensureAuthenticated, notes.postNewNote);
-  
-  app.get('/myNotes', ensureAuthenticated, notes.getMyNotes);
-  
-  app.get('/myEventNotes', ensureAuthenticated, notes.getMyEventNotes);
-
-  app.get('/eventNotes', ensureAuthenticated, notes.getEventNotes);
-  app.post('/eventNotes', ensureAuthenticated, notes.postEventNotes);
-
-  app.get('/userNotes', ensureAuthenticated, notes.getUserNotes);
-  app.post('/userNotes', ensureAuthenticated, notes.postUserNotes);
-
-  app.get('/newEvent', ensureAuthenticated, events.getNewEvent);
-  app.post('/newEvent', ensureAuthenticated, events.postNewEvent);
-
-  app.get('/setEvent', ensureAuthenticated, events.getSetEvent);
-  app.get('/setEvent/:id', ensureAuthenticated, events.setEventID);
-  app.get('/sortEvents/:operation', ensureAuthenticated, events.setEventSort);
-
-  app.get('/clearEvent', ensureAuthenticated, events.clearEvent);  
- 
- */
 }

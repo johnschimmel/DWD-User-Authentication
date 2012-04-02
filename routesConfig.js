@@ -3,9 +3,9 @@
 
 var passport = require('passport');
 
-var main = require('./routes/index');
-var notes = require('./routes/notes');
-var events = require('./routes/events');
+var user = require('./routes/user');
+//var notes = require('./routes/notes');
+//var events = require('./routes/events');
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
@@ -14,14 +14,14 @@ function ensureAuthenticated(req, res, next) {
 
 module.exports = function(app) {
 
-  app.get('/', main.index);
+  app.get('/', user.index);
 
-  app.get('/register', main.getRegister);
-  app.post('/register', main.postRegister);
+  app.get('/register', user.getRegister);
+  app.post('/register', user.postRegister);
 
-  app.get('/about', main.about);
+  app.get('/about', user.about);
 
-  app.get('/login', main.login);
+  app.get('/login', user.login);
   app.post('/login', passport.authenticate('local', 
     { 
       successRedirect: '/account', 
@@ -29,10 +29,12 @@ module.exports = function(app) {
     })
   );
 
-  app.get('/account', ensureAuthenticated, main.getAccount);
+  app.get('/account', ensureAuthenticated, user.getAccount);
 
-  app.get('/logout', main.logout);
+  app.get('/logout', user.logout);
 
+
+/*
   app.get('/reviewNotes', ensureAuthenticated, notes.reviewNotes);
 
   app.get('/newNote', ensureAuthenticated, notes.getNewNote);
@@ -56,4 +58,6 @@ module.exports = function(app) {
   app.get('/sortEvents/:operation', ensureAuthenticated, events.setEventSort);
 
   app.get('/clearEvent', ensureAuthenticated, events.clearEvent);  
+ 
+ */
 }

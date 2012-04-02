@@ -26,24 +26,10 @@ UserSchema
 })
 .set(function (password) {
   this._password = password;
-  var salt = this.salt = bcrypt.genSaltSync(10);
-  this.hash = bcrypt.hashSync(password, salt);
+  var salt = this.salt = bcrypt.gen_salt_sync(10);
+  this.hash = bcrypt.encrypt_sync(password, salt);
 });
 
-// Not entirely sure why the async version isn't working...
-//.virtual('password')
-//.get(function() {
-//  return this._password;
-//})
-//.set(function(password) {
-//  this._password = password;
-//  bcrypt.genSalt(10, function(err, salt) {
-//    this.salt = salt;
-//    bcrypt.hash(password, salt, function(err, hash) {
-//      this.hash = hash;
-//    });
-//  });
-//});
 
 UserSchema.method('verifyPassword', function(password, callback) {
   bcrypt.compare(password, this.hash, callback);

@@ -70,4 +70,3 @@ Open in browser the lazy man way
 
     heroku open
     
-    git

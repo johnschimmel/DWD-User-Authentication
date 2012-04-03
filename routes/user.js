@@ -31,6 +31,29 @@ module.exports = {
         });
     },
 
+    postChangePassword : function(request, response) {
+        if (request.param('password') == request.param('password2')) {
+            
+            //look up user
+            db.User.findById(request.user._id, function(err, user){
+                
+                //set the new password
+                user.set('password', request.param('password'));
+                user.save();
+                
+                // set Flash message and redirect back to /account
+                request.flash("message", "Password was updated");
+                response.redirect('/account');
+                
+            })
+            
+        } else {
+            
+            request.flash("message", "Passwords Do Not Match");
+            response.redirect('/account');
+        }
+    },
+    
     // app.get('/login', ...
     login: function(request, response) {
         
@@ -44,7 +67,9 @@ module.exports = {
     // app.get('/account', ensureAuthenticated, ...
     getAccount: function(request, response) {
         templateData = {
-            currentUser : request.user
+            currentUser : request.user,
+            message : request.flash('message')[0] // get message is received from prior form submission like password change
+
         }
     
         response.render('account.html', templateData );

@@ -39,7 +39,8 @@ passport.deserializeUser(function(id, done) {
 // connect to database
 module.exports = {
   
-  //include Models
+  //include all Models
+  // you can access models with db.User or db.ModelName
   User : User,
 
   // DB Helper functions

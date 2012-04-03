@@ -36,6 +36,8 @@ module.exports = function(app) {
     // Display account page
     app.get('/account', ensureAuthenticated, userRoute.getAccount);
 
+    app.post('/account/changepassword', ensureAuthenticated, userRoute.postChangePassword),
+    
     // Logout user
     app.get('/logout', userRoute.logout);
 

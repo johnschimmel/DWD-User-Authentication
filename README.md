@@ -5,13 +5,14 @@ And Raquel's notes on [Mongoose Auth --> Passport](http://raquelvelez.com/blog/2
 
 # Set up file structure and Heroku App
 
-If you haven't already, create a new app on Heroku (cedar), this will add an additional remote GIT path to Heroku. (Assumes you have [Heroku Toolbelt](https://toolbelt.heroku.com/) installed)
-
-	heroku create --stack cedar
-
 In your terminal, clone this repo
 
 	git clone git@github.com:johnschimmel/DWD-User-Authentication.git
+
+
+If you haven't already, create a new app on Heroku (cedar), this will add an additional remote GIT path to Heroku. (Assumes you have [Heroku Toolbelt](https://toolbelt.heroku.com/) installed)
+
+	heroku create --stack cedar
 
 # Set up MongoDB and .env
 

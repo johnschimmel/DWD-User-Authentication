@@ -1,8 +1,3 @@
-
-/**
- * Module dependencies.
- */
-
 // base dependencies for app
 var express = require('express')
   , passport = require('passport')
@@ -16,45 +11,46 @@ var app = module.exports = express.createServer();
 global.app = app;
 
 var DB = require('./accessDB');
+var db = new DB.startup(process.env.MONGOLAB_URI);
 
-// this should be moved to .env file
-var conn = 'mongodb://heroku_app3528267:iccjel18kpf6bi8c4mgfql7e56@ds031657.mongolab.com:31657/heroku_app3528267';
-var db;
 
 // Configuration
 app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
-  app.set('view options',{layout:true}); // use /views/layout.html to manage your main header/footer wrapping template
-  app.register('html',require('ejs')); //use .html files in /views instead .hbs
+
+    //configure template engine
+    app.set('views', __dirname + '/views'); //store all templates inside /views
+    app.set('view engine', 'ejs'); // ejs is our template engine
+    app.set('view options',{layout:true}); // use /views/layout.html to manage your main header/footer wrapping template
+    app.register('html',require('ejs')); //use .html files in /views instead .ejs extension
+    
+    app.use(express.cookieParser());//Cookies must be turned on for Sessions
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
+
+    /*** Turn on Express Sessions - Use MongoStore ***/
+    app.use(express.session({ 
+            store: mongoStore({url:process.env.MONGOLAB_URI})
+            , secret: 'SuperSecretString'
+        }, function() {
+            app.use(app.router);
+        })
+    );
+    app.use(passport.initialize());
+    app.use(passport.session());
+    /*** end of passport setup ***/
+    
+    // define the static directory for css, img and js files
+    app.use(express.static(__dirname + '/static'));
   
-  //Cookies must be turned on for Sessions
-  app.use(express.cookieParser());
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  
-  /*** Turn on Express Sessions - Use MongoStore ***/
-  app.use(express.session({ 
-    store: mongoStore({url:process.env.MONGOLAB_URI})
-  , secret: 'SuperSecretString'
-  }, function() {
-    app.use(app.router);
-  }));
-  app.use(passport.initialize());
-  app.use(passport.session());
-  
-  app.use(express.static(__dirname + '/static'));
-  
-  /**** Turn on some debugging tools ****/
-  app.use(express.logger());
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+    /**** Turn on some debugging tools ****/
+    app.use(express.logger());
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
   
 });
 
-db = new DB.startup(process.env.MONGOLAB_URI);
 
-
-// Routes
+// Routes - all URLs are defined inside routesConfig.js
+// we pass in 'app'
 require('./routesConfig')(app);
 
 // Make server turn on and listen at defined PORT (or port 3000 if is not defined)

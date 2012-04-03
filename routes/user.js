@@ -8,59 +8,66 @@ var db = require('../accessDB');
 module.exports = {
 
     // app.get('/'...)
-    index: function(req, res) {
-      console.log(db.mongoose);
-      templateData = {}
-      res.render('index.html', templateData);
+    index: function(request, response) {
+      
+        templateData = {}
+        response.render('index.html', templateData);
     },
 
     // app.get('/register'...)
-    getRegister: function(req, res) {
-    res.render('register.html');
+    getRegister: function(request, response) {
+        response.render('register.html');
     },
 
     // app.post('/register'...)
-    postRegister: function(req, res) {
-    db.saveUser({
-      fname : req.param('firstname')
-    , lname : req.param('lastname')
-    , email : req.param('email')
-    , password : req.param('password')
-    }, function(err,docs) {
-      res.redirect('/account');
-    });
-    },
-
-    // app.get('/about', ...
-    about: function(req, res) {
-    res.render('about.jade');
+    postRegister: function(request, response) {
+        db.saveUser({
+              fname : request.param('firstname')
+            , lname : request.param('lastname')
+            , email : request.param('email')
+            , password : request.param('password')
+        }, function(err,docs) {
+            response.redirect('/account');
+        });
     },
 
     // app.get('/login', ...
-    login: function(req, res) {
+    login: function(request, response) {
         
         templateData = {
-             message: req.flash('error')[0] // if error message is received from prior login attempt
+             message: request.flash('error')[0] // get error message is received from prior login attempt
         }
         
-        console.log(templateData);
-        console.log("*********");
-        res.render('login.html', templateData);
+        response.render('login.html', templateData);
     },
 
     // app.get('/account', ensureAuthenticated, ...
-    getAccount: function(req, res) {
+    getAccount: function(request, response) {
         templateData = {
-            currentUser : req.user
+            currentUser : request.user
         }
     
-      res.render('account.html', templateData );
+        response.render('account.html', templateData );
     },
 
+    getUsers : function(request, response) {
+        db.User.find({},['email','name.first','name.last'], function(err,users) {
+            
+            if (err) {
+                console.log(err);
+                response.send("an error occurred");
+            }
+            
+            response.json(users);
+            
+        })
+        
+    },
+    
     // app.get('/logout'...)
-    logout: function(req, res){
-    req.logout();
-    res.redirect('/');
+    logout: function(request, response){
+        request.logout();
+        response.redirect('/');
     }
 
 };

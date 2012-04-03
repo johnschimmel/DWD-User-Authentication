@@ -9,8 +9,6 @@ var passport = require('passport')
 var User = require('./models/user');
 
 
-
-
 // Define local strategy for Passport
 passport.use(new LocalStrategy({
     usernameField: 'email'
@@ -18,8 +16,6 @@ passport.use(new LocalStrategy({
   function(email, password, done) {
     User.authenticate(email, password, function(err, user) {
         if (err || !user) { return done(null, false, { message: 'Invalid password' }); }
-        //if (!user) { return done(null, false, { message: 'Unkown email ' + email }); }
-        //if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
         return done(null, user);
     });
   }
@@ -42,7 +38,11 @@ passport.deserializeUser(function(id, done) {
 
 // connect to database
 module.exports = {
+  
+  //include Models
+  User : User,
 
+  // DB Helper functions
   // initialize DB
   startup: function(dbToUse) {
     mongoose.connect(dbToUse);

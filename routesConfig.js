@@ -28,10 +28,11 @@ module.exports = function(app) {
     // Login attempted POST on '/local'
     // Passport.authenticate with local email and password, if fails redirect back to GET /login
     // If successful, redirect to /account
-    app.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-    function(req, res) {
-      res.redirect('/account');
-    });
+    app.post('/login', 
+        passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
+        function(req, res) {
+            res.redirect('/account');
+        });
     
     // Display account page
     app.get('/account', ensureAuthenticated, userRoute.getAccount);

@@ -6,8 +6,9 @@ var	Schema = mongoose.Schema;
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
-var User = require('./models/user');
 
+// Including the User model
+var User = require('./models/user');
 
 // Define local strategy for Passport
 passport.use(new LocalStrategy({

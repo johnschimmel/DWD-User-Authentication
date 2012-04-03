@@ -4,10 +4,10 @@
   */
 var db = require('../accessDB');
 
-
 module.exports = {
 
     // app.get('/'...)
+    // userRoute.index
     index: function(request, response) {
       
         templateData = {}
@@ -21,12 +21,14 @@ module.exports = {
 
     // app.post('/register'...)
     postRegister: function(request, response) {
-        db.saveUser({
+        userData = {
               fname : request.param('firstname')
             , lname : request.param('lastname')
             , email : request.param('email')
             , password : request.param('password')
-        }, function(err,docs) {
+        }
+        
+        db.saveUser(userData, function(err,docs) {
             response.redirect('/account');
         });
     },
@@ -76,6 +78,8 @@ module.exports = {
     },
 
     getUsers : function(request, response) {
+        
+        // query for all users only retrieve email and name
         db.User.find({},['email','name.first','name.last'], function(err,users) {
             
             if (err) {

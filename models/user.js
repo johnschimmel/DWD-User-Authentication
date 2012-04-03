@@ -1,4 +1,3 @@
-/** User Schema for CrowdNotes **/
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;

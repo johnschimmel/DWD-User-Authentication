@@ -1,5 +1,8 @@
 A boilerplate to use NodeJS, Express & Passport with MongoDB on Heroku!
 
+Much of this code was possible from Raquel Vélez's [CrowdNotes project](https://github.com/rockbot/CrowdNotes)
+And Raquel's notes on [Mongoose Auth --> Passport](http://raquelvelez.com/blog/2012/03/transitioning-from-mongoose-auth-to-passport/)
+
 # Set up file structure and Heroku App
 
 In your terminal, clone this repo

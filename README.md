@@ -6,10 +6,6 @@ In your terminal, clone this repo
 
 	git clone git@github.com:johnschimmel/DWD-User-Authentication.git
 
-Create a new app on Heroku (cedar), this will add an additional remote GIT path to Heroku. (Assumes you have [Heroku Toolbelt](https://toolbelt.heroku.com/) installed)
-
-	heroku create --stack cedar
-
 # Set up MongoDB and .env
 
 Add free [MongoLab account add-on](https://addons.heroku.com/mongolab) for your MongoDB 
@@ -44,8 +40,30 @@ This will also run when deployed to Heroku
 
     npm install
     
-# Run
+# Run locally
 
     foreman start
     
 Visit on your browser at [http://localhost:5000](http://localhost:5000)
+
+------- 
+
+# Run on Heroku
+
+If you haven't already, create a new app on Heroku (cedar), this will add an additional remote GIT path to Heroku. (Assumes you have [Heroku Toolbelt](https://toolbelt.heroku.com/) installed)
+
+	heroku create --stack cedar
+
+Commit all changes
+
+    git commit -am "my commit message"
+    
+Push to Heroku
+
+    git push heroku master
+    
+Open in browser the lazy man way
+
+    heroku open
+    
+    git

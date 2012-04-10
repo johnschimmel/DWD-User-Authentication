@@ -34,30 +34,41 @@ Add local config variable for MongoLab
 
     echo MONGOLAB_URI=mongodb://heroku_randomapp:hashedpassword@subdomain.mongolab.com:port/heroku_randomapp >> .env
     
+    
+-------
+
+## Amazon S3
+
+### Sign up for S3
+To sign up for Amazon S3, click the “Sign up for This Web Service” button on the [Amazon S3 detail](http://aws.amazon.com/s3/) page. You must have an Amazon Web Services account to access this service; if you do not already have one, you will be prompted to create one when you begin the Amazon S3 sign-up process.
+
+### Set up a bucket
+When you have your account set up, you can set up your first Bucket in the [AWS S3 Console](http://aws.amazon.com/s3/). On the left panel, click the "Create Bucket", fill in the Bucket name field. Leave the 'Region' as 'US Standard'. Click the Create button to finish and create the bucket.
+
 Add Amazon S3 config variables for local dev
 
     echo AWS_KEY=YOUR_AWS_KEY >> .env
     echo AWS_SECRET=YOUR_AWS_SECRET >> .env
 
-Add Amazon S3 config variables to Heroku config
+Add Amazon S3 config variables to Heroku config. These variables will be used on the LIVE herokuapp.com servers.
 
     heroku config:add AWS_KEY=YOUR_AWS_KEY AWS_SECRET=YOUR_AWS_SECRET
     
-When you start your Heroku app with 
+**Last step, add your bucket name.** Open **/routes/user.js** change line 2 with your bucket name
 
-    foreman start
+    // CHANGE THIS TO YOUR BUCKET NAME
+    var myBucket = 'YOUR_BUCKET_NAME';
     
-You have access to the MONGOLAB_URI with this variable
+-------
 
-    process.env.MONGOLAB_URI
-    
-This will also run when deployed to Heroku
+# Get the party started
 
-# Install Node Modules
+
+## Install Node Modules
 
     npm install
     
-# Run locally
+## Run locally
 
     foreman start
     

@@ -1,16 +1,20 @@
+// CHANGE THIS TO YOUR BUCKET NAME
+var myBucket = 'heroku_uploads';
 
 /**
   * Module dependencies.
-  */
+  */  
 var db = require('../accessDB')
    , format = require('util').format
    , fs = require('fs');
 
 var knox = require('knox');
+
+
 var S3Client = knox.createClient({
       key: process.env.AWS_KEY
     , secret: process.env.AWS_SECRET
-    , bucket: 'heroku_uploads'
+    , bucket: myBucket
 });
 
 
@@ -83,6 +87,7 @@ module.exports = {
         db.Images.find({user:request.user._id}, function(err, images){
             templateData = {
                 currentUser : request.user,
+                s3bucket : S3Client.bucket,
                 images : images,
                 message : request.flash('message')[0] // get message is received from prior form submission like password change
 
@@ -114,14 +119,7 @@ module.exports = {
         request.logout();
         response.redirect('/');
     },
-    
-    uploadGet : function(req, res){
-      res.send('<form method="post" action="/upload" enctype="multipart/form-data">'
-        + '<p>Title: <input type="text" name="title" /></p>'
-        + '<p>Image: <input type="file" name="image" /></p>'
-        + '<p><input type="submit" value="Upload" /></p>'
-        + '</form>');
-    },
+
     
     uploadPost : function(request, response) {
         

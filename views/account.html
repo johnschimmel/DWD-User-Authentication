@@ -28,7 +28,9 @@
             <br>
             <small><a href="/deleteImage/<%= images[i]._id %>">delete</a></small>
             <br>
-            <a href="https://s3.amazonaws.com/heroku_uploads/<%= images[i].filename %>"><img src="https://s3.amazonaws.com/heroku_uploads/<%= images[i].filename %>"></a>
+            <a href="https://s3.amazonaws.com/<%= s3bucket %>/<%= images[i].filename %>">
+                <img src="https://s3.amazonaws.com/<%= s3bucket %>/<%= images[i].filename %>">
+            </a>
         </li>
     <% } %>
 

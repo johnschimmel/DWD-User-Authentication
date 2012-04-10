@@ -7,8 +7,9 @@ var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
 
-// Including the User model
+// Including the User & Image model
 var User = require('./models/user');
+var Images = require('./models/image');
 
 // Define local strategy for Passport
 passport.use(new LocalStrategy({
@@ -43,7 +44,8 @@ module.exports = {
   //include all Models
   // you can access models with db.User or db.ModelName
   User : User,
-
+  Images : Images, 
+  
   // DB Helper functions
   // initialize DB
   startup: function(dbToUse) {

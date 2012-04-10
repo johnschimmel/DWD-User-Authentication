@@ -43,4 +43,9 @@ module.exports = function(app) {
     app.get('/logout', userRoute.logout);
 
     app.get('/getusers', userRoute.getUsers);
+    
+    app.get('/upload', ensureAuthenticated, userRoute.uploadGet);
+    app.post('/upload', ensureAuthenticated, userRoute.uploadPost);
+    
+    app.get('/deleteimage/:imageID', ensureAuthenticated, userRoute.deleteImage);
 }

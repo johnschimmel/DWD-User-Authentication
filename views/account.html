@@ -1,16 +1,49 @@
-<p>Hello <%= currentUser.name.first %></p>
+<p>Hello <%= currentUser.name.first %> | <a href="/logout">Logout</a></p>
 
 <hr/>
 <% if (typeof(message) != "undefined") { %>
 <p><%= message %></p>
 <hr>
 <% } %>
-<h3>Change password</h3>
-<form method="POST" action="/account/changepassword">
-    New Password : <input type="password" name="password"><br>
-    Type Password again: <input type="password" name="password2"><br>
-    <br>
-    <input type="submit" name="submit" value="Change Password">
-</form>
+
+<style>
+  li img {
+      maxWidth:250px;
+      padding:12px;
+  }
+</style>
+
+<div style="width:350px;float:left">
+    <h2>Upload a new photo</h2>
+    <form method="post" action="/upload" enctype="multipart/form-data">
+        <p>Caption: <input type="text" name="caption" /></p>
+        <p>Image: <input type="file" name="image" /></p>
+        <p><input type="submit" value="Upload" /></p>
+    </form>
+    <hr>
+    <h2>Images (<%= images.length %>)</h2>
+    <% for(i=0; i < images.length; i++) { %>
+        <li>
+            <b><%= images[i].caption %></b>
+            <br>
+            <small><a href="/deleteImage/<%= images[i]._id %>">delete</a></small>
+            <br>
+            <a href="https://s3.amazonaws.com/heroku_uploads/<%= images[i].filename %>"><img src="https://s3.amazonaws.com/heroku_uploads/<%= images[i].filename %>"></a>
+        </li>
+    <% } %>
+
+</div>
+
+<div style="float:right">
+
     
-<p><a href="/logout">Logout</a></p>
+    <h3>Change password</h3>
+    <form method="POST" action="/account/changepassword">
+        New Password : <input type="password" name="password"><br>
+        Type Password again: <input type="password" name="password2"><br>
+        <br>
+        <input type="submit" name="submit" value="Change Password">
+    </form>
+    
+    
+</div>

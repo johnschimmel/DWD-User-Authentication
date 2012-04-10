@@ -30,9 +30,18 @@ Copy the Mongo URI connection string starting from **mongodb://** to the end, wi
 
     mongodb://heroku_randomapp:hashedpassword@subdomain.mongolab.com:port/heroku_randomapp
     
-Create or edit existing **.env** file 
+Add local config variable for MongoLab
 
-    MONGOLAB_URI=mongodb://heroku_randomapp:hashedpassword@subdomain.mongolab.com:port/heroku_randomapp
+    echo MONGOLAB_URI=mongodb://heroku_randomapp:hashedpassword@subdomain.mongolab.com:port/heroku_randomapp >> .env
+    
+Add Amazon S3 config variables for local dev
+
+    echo AWS_KEY=YOUR_AWS_KEY >> .env
+    echo AWS_SECRET=YOUR_AWS_SECRET >> .env
+
+Add Amazon S3 config variables to Heroku config
+
+    heroku config:add AWS_KEY=YOUR_AWS_KEY AWS_SECRET=YOUR_AWS_SECRET
     
 When you start your Heroku app with 
 

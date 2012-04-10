@@ -53,7 +53,9 @@ Add Amazon S3 config variables for local dev
 Add Amazon S3 config variables to Heroku config. These variables will be used on the LIVE herokuapp.com servers.
 
     heroku config:add AWS_KEY=YOUR_AWS_KEY AWS_SECRET=YOUR_AWS_SECRET
-    
+
+This code uses the [Knox NodeJS S3](https://github.com/LearnBoost/knox) module. It works great, you can see the code implementation in **/routes/user.js**.
+
 **Last step, add your bucket name.** Open **/routes/user.js** change line 2 with your bucket name
 
     // CHANGE THIS TO YOUR BUCKET NAME

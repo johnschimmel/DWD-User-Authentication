@@ -15,7 +15,7 @@
             
 
 // base dependencies for script
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
     , db = require('./accessDB');
 
 db.startup(process.env.MONGOLAB_URI); // start the db connectino

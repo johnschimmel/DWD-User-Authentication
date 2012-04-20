@@ -173,7 +173,7 @@ module.exports = {
                     }
                     
                     var conditions = { _id: request.user._id }
-                      , update = { profileImage: UserImage }}
+                      , update = { $push : profileImage: UserImage }}
                       , options = { multi: false };
                      
                     // run the Mongo update

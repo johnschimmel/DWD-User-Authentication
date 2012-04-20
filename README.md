@@ -92,3 +92,18 @@ Open in browser the lazy man way
 
     heroku open
     
+## Run a one-off script
+
+Sample One Off Script
+Demonstrates how to run a one-off script locally or on heroku. This example will print out the email addresses of all users (if any exist)
+
+To Use:
+
+1) update Procfile - add following line to existing file
+    mytask: node oneOffScript.js
+
+2) To test locally
+    foreman start mytask
+
+3) Execute from Heroku (must be commited and pushed to Heroku first)
+    heroku run mytask

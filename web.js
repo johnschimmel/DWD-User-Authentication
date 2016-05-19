@@ -31,7 +31,7 @@ app.configure(function(){
     /*** Turn on Express Sessions - Use MongoStore ***/
     app.use(express.session({ 
             store: mongoStore({url:process.env.MONGOLAB_URI})
-            , secret: 'SuperSecretString'
+            , secret: process.env.SUPERSECRETSTRING
         }, function() {
             app.use(app.router);
         })
